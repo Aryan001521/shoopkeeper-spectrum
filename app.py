@@ -27,7 +27,7 @@ os.makedirs("models", exist_ok=True)
 if not os.path.exists("models/item_similarity.pkl"):
 
     hf_hub_download(
-        repo_id="ijgh/shopper-spectrum-models",
+        repo_id="ijghb/shopper-spectrum-models",
         filename="item_similarity.pkl",
         local_dir="models"
     )
