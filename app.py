@@ -1,4 +1,4 @@
-# app.py
+from huggingface_hub import hf_hub_download
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -17,7 +17,19 @@ st.set_page_config(
     page_icon="🛍",
     layout="wide"
 )
+# ----------------------------
+# DOWNLOAD LARGE MODEL
+# ----------------------------
 
+os.makedirs("models", exist_ok=True)
+
+if not os.path.exists("models/item_similarity.pkl"):
+
+    hf_hub_download(
+        repo_id="ijgh/shopper-spectrum-models",
+        filename="item_similarity.pkl",
+        local_dir="models"
+    )
 # ----------------------------
 # LOAD MODELS
 # ----------------------------
@@ -31,9 +43,9 @@ def load_models():
     with open("models/scaler.pkl", "rb") as f:
         scaler = pickle.load(f)
 
-    with open("models/item_similarity.pkl", "rb") as f:
-        item_sim_df = pickle.load(f)
-
+    item_sim_df = pd.read_pickle(
+    "models/item_similarity.pkl"
+     )
     with open("models/cluster_labels.json", "r") as f:
         cluster_labels = json.load(f)
 
